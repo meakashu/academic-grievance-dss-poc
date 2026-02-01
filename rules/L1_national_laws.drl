@@ -1,0 +1,184 @@
+package com.grievance.rules.L1_national;
+
+import com.grievance.model.Grievance;
+import com.grievance.model.Decision;
+import com.grievance.model.RuleTrace;
+
+global RuleTrace ruleTrace;
+
+/**
+ * UGC Regulations 2018 - Minimum Attendance Requirement
+ * Authority: University Grants Commission (National Level)
+ * Source: UGC Regulations on Minimum Standards and Procedure for Award of M.Phil./Ph.D. Degrees, 2018
+ * Effective Date: July 1, 2018
+ */
+
+rule "UGC_Attendance_75Percent_Minimum"
+    salience 1500
+    
+    metadata {
+        level: "L1_National",
+        authority: "University Grants Commission (UGC)",
+        source: "UGC Regulations 2018, Section 4.2",
+        sourceUrl: "https://www.ugc.ac.in/pdfnews/4033931_UGC-Minimum-Standard-and-Procedure-Regulations-2018.pdf",
+        effectiveDate: "2018-07-01",
+        category: "Attendance",
+        ruleType: "MANDATORY",
+        description: "Mandates minimum 75% attendance for semester eligibility across all higher education institutions"
+    }
+    
+    when
+        $g: Grievance(
+            type == "ATTENDANCE_SHORTAGE",
+            attendancePercentage < 75,
+            hasMedicalCertificate == false
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("REJECT");
+        decision.setReason("Attendance below UGC-mandated 75% minimum without medical excuse");
+        decision.setApplicableRule("UGC_Attendance_75Percent_Minimum");
+        decision.setRegulatorySource("UGC Regulations 2018, Section 4.2");
+        decision.setHierarchyLevel("L1_National");
+        decision.setSalience(1500);
+        
+        ruleTrace.addFiredRule(
+            "UGC_Attendance_75Percent_Minimum",
+            "L1_National",
+            1500,
+            "Attendance " + $g.getAttendancePercentage() + "% < 75% threshold, no medical certificate",
+            "REJECT",
+            "UGC Regulations 2018, Section 4.2"
+        );
+        
+        insert(decision);
+end
+
+rule "UGC_Medical_Excuse_Exception"
+    salience 1600  // Higher priority than base rule (exception handling)
+    
+    metadata {
+        level: "L1_National",
+        authority: "University Grants Commission (UGC)",
+        source: "UGC Regulations 2018, Section 4.2.1 (Medical Exception)",
+        sourceUrl: "https://www.ugc.ac.in/pdfnews/4033931_UGC-Minimum-Standard-and-Procedure-Regulations-2018.pdf",
+        effectiveDate: "2018-07-01",
+        category: "Attendance",
+        ruleType: "EXCEPTION",
+        description: "Allows attendance relaxation to 65% with valid medical certificate from recognized medical authority"
+    }
+    
+    when
+        $g: Grievance(
+            type == "ATTENDANCE_SHORTAGE",
+            attendancePercentage >= 65,
+            attendancePercentage < 75,
+            hasMedicalCertificate == true,
+            medicalCertificateValid == true,
+            medicalCertificateFromRecognizedAuthority == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("Medical excuse exception: Attendance relaxed to 65% with valid certificate from recognized medical authority");
+        decision.setApplicableRule("UGC_Medical_Excuse_Exception");
+        decision.setRegulatorySource("UGC Regulations 2018, Section 4.2.1");
+        decision.setHierarchyLevel("L1_National");
+        decision.setSalience(1600);
+        
+        ruleTrace.addFiredRule(
+            "UGC_Medical_Excuse_Exception",
+            "L1_National",
+            1600,
+            "Medical certificate valid, attendance " + $g.getAttendancePercentage() + "% >= 65%",
+            "ACCEPT",
+            "UGC Regulations 2018, Section 4.2.1"
+        );
+        
+        insert(decision);
+end
+
+rule "UGC_Examination_Revaluation_Right"
+    salience 1400
+    
+    metadata {
+        level: "L1_National",
+        authority: "University Grants Commission (UGC)",
+        source: "UGC Regulations 2018, Section 6.3",
+        sourceUrl: "https://www.ugc.ac.in/pdfnews/4033931_UGC-Minimum-Standard-and-Procedure-Regulations-2018.pdf",
+        effectiveDate: "2018-07-01",
+        category: "Examination",
+        ruleType: "MANDATORY",
+        description: "Guarantees student right to request re-evaluation of answer scripts within 15 days of result declaration"
+    }
+    
+    when
+        $g: Grievance(
+            type == "EXAMINATION_REEVAL",
+            daysSinceResultDeclaration <= 15,
+            hasAlreadyRequestedReeval == false
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("Re-evaluation request within UGC-mandated 15-day window");
+        decision.setApplicableRule("UGC_Examination_Revaluation_Right");
+        decision.setRegulatorySource("UGC Regulations 2018, Section 6.3");
+        decision.setHierarchyLevel("L1_National");
+        decision.setSalience(1400);
+        
+        ruleTrace.addFiredRule(
+            "UGC_Examination_Revaluation_Right",
+            "L1_National",
+            1400,
+            "Re-evaluation requested " + $g.getDaysSinceResultDeclaration() + " days after result (within 15-day limit)",
+            "ACCEPT",
+            "UGC Regulations 2018, Section 6.3"
+        );
+        
+        insert(decision);
+end
+
+rule "Right_To_Education_Fee_Waiver_SC_ST"
+    salience 1700
+    
+    metadata {
+        level: "L1_National",
+        authority: "Ministry of Education, Government of India",
+        source: "Right to Education Act 2009, Section 12(1)(c)",
+        sourceUrl: "https://www.education.gov.in/sites/upload_files/mhrd/files/rte.pdf",
+        effectiveDate: "2009-08-26",
+        category: "Fee",
+        ruleType: "MANDATORY",
+        description: "Mandates fee waiver for SC/ST category students with family income below ₹200,000 per annum"
+    }
+    
+    when
+        $g: Grievance(
+            type == "FEE_WAIVER",
+            studentCategory in ("SC", "ST"),
+            familyIncome < 200000,
+            hasIncomeCertificate == true,
+            hasCategoryCertificate == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("Eligible for fee waiver under Right to Education Act: SC/ST category with family income ₹" + 
+                          $g.getFamilyIncome() + " < ₹200,000 threshold");
+        decision.setApplicableRule("Right_To_Education_Fee_Waiver_SC_ST");
+        decision.setRegulatorySource("Right to Education Act 2009, Section 12(1)(c)");
+        decision.setHierarchyLevel("L1_National");
+        decision.setSalience(1700);
+        
+        ruleTrace.addFiredRule(
+            "Right_To_Education_Fee_Waiver_SC_ST",
+            "L1_National",
+            1700,
+            "SC/ST category, family income ₹" + $g.getFamilyIncome() + " < ₹200,000, certificates provided",
+            "ACCEPT",
+            "Right to Education Act 2009, Section 12(1)(c)"
+        );
+        
+        insert(decision);
+end

@@ -1,0 +1,41 @@
+participant_id,order,fairness_a,trust_a,transparency_a,fairness_b,trust_b,transparency_b,quote_a,quote_b
+P001,A_then_B,2,2,1,4,3,3,I have no idea what went wrong.,"Even though I didn't like the outcome, I understood why it happened."
+P002,A_then_B,2,2,2,4,2,4,The decision feels unjustified.,Knowing the exact threshold and my status helps me accept the decision.
+P003,A_then_B,2,1,1,3,4,3,I don't understand why this happened.,Knowing the exact threshold and my status helps me accept the decision.
+P004,A_then_B,1,2,2,4,4,4,"Without explanation, I feel the system is biased.",I can see this wasn't personal - it's just the policy.
+P005,A_then_B,1,3,2,4,4,5,It felt arbitrary and unfair.,The transparency makes me trust the process more.
+P006,A_then_B,1,3,2,3,3,4,The decision feels unjustified.,The explanation helped me see that it was based on clear rules.
+P007,A_then_B,2,1,2,2,3,4,"Without explanation, I feel the system is biased.",The explanation helped me see that it was based on clear rules.
+P008,A_then_B,1,2,1,5,3,3,I don't understand why this happened.,The transparency makes me trust the process more.
+P009,A_then_B,2,2,1,5,3,4,The decision feels unjustified.,I appreciate knowing the specific regulation that applied.
+P010,A_then_B,3,1,1,3,3,4,I don't understand why this happened.,The transparency makes me trust the process more.
+P011,A_then_B,2,2,1,3,4,4,"Without explanation, I feel the system is biased.",The explanation helped me see that it was based on clear rules.
+P012,A_then_B,2,3,1,4,4,4,I don't understand why this happened.,The explanation helped me see that it was based on clear rules.
+P013,A_then_B,1,2,2,3,2,3,This seems like a black box decision.,The transparency makes me trust the process more.
+P014,A_then_B,3,2,2,3,4,4,It felt arbitrary and unfair.,Knowing the exact threshold and my status helps me accept the decision.
+P015,A_then_B,2,1,1,3,3,4,This seems like a black box decision.,The explanation helped me see that it was based on clear rules.
+P016,A_then_B,1,3,2,3,3,4,It felt arbitrary and unfair.,I can see this wasn't personal - it's just the policy.
+P017,A_then_B,1,1,1,3,3,4,I have no idea what went wrong.,"Even though I didn't like the outcome, I understood why it happened."
+P018,A_then_B,1,1,2,4,4,4,I don't understand why this happened.,"Even though I didn't like the outcome, I understood why it happened."
+P019,A_then_B,2,3,2,4,4,3,I have no idea what went wrong.,I can see this wasn't personal - it's just the policy.
+P020,A_then_B,3,3,2,3,2,4,I don't understand why this happened.,The transparency makes me trust the process more.
+P021,B_then_A,2,1,1,3,3,4,I have no idea what went wrong.,"It's still disappointing, but at least I know the reason."
+P022,B_then_A,2,2,1,4,3,4,It felt arbitrary and unfair.,Knowing the exact threshold and my status helps me accept the decision.
+P023,B_then_A,1,2,2,3,4,4,The decision feels unjustified.,"It's still disappointing, but at least I know the reason."
+P024,B_then_A,2,2,2,3,2,4,This seems like a black box decision.,The explanation helped me see that it was based on clear rules.
+P025,B_then_A,3,3,1,4,3,4,The decision feels unjustified.,Knowing the exact threshold and my status helps me accept the decision.
+P026,B_then_A,3,2,1,4,3,4,This seems like a black box decision.,The explanation helped me see that it was based on clear rules.
+P027,B_then_A,1,2,1,5,2,4,I have no idea what went wrong.,"Even though I didn't like the outcome, I understood why it happened."
+P028,B_then_A,5,3,2,2,4,4,I don't understand why this happened.,"It's still disappointing, but at least I know the reason."
+P029,B_then_A,1,2,1,3,2,5,"Without explanation, I feel the system is biased.",I can see this wasn't personal - it's just the policy.
+P030,B_then_A,2,1,1,2,3,3,This seems like a black box decision.,The explanation helped me see that it was based on clear rules.
+P031,B_then_A,2,3,2,4,4,4,It felt arbitrary and unfair.,The transparency makes me trust the process more.
+P032,B_then_A,1,2,1,3,2,4,It felt arbitrary and unfair.,The transparency makes me trust the process more.
+P033,B_then_A,3,3,1,4,2,4,It felt arbitrary and unfair.,The transparency makes me trust the process more.
+P034,B_then_A,3,3,1,3,3,5,"Without explanation, I feel the system is biased.",The explanation helped me see that it was based on clear rules.
+P035,B_then_A,2,2,1,3,5,3,It felt arbitrary and unfair.,"It's still disappointing, but at least I know the reason."
+P036,B_then_A,1,1,2,4,3,4,"Without explanation, I feel the system is biased.","Even though I didn't like the outcome, I understood why it happened."
+P037,B_then_A,2,1,2,4,3,3,The decision feels unjustified.,The transparency makes me trust the process more.
+P038,B_then_A,3,2,1,4,3,4,It felt arbitrary and unfair.,"Even though I didn't like the outcome, I understood why it happened."
+P039,B_then_A,2,2,1,4,3,5,"Without explanation, I feel the system is biased.",The transparency makes me trust the process more.
+P040,B_then_A,1,2,1,3,3,4,It felt arbitrary and unfair.,I appreciate knowing the specific regulation that applied.

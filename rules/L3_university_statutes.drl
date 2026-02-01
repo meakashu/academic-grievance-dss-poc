@@ -1,0 +1,226 @@
+package com.grievance.rules.L3_university;
+
+import com.grievance.model.Grievance;
+import com.grievance.model.Decision;
+import com.grievance.model.RuleTrace;
+
+global RuleTrace ruleTrace;
+
+/**
+ * University Statute 2020 - Institutional Regulations
+ * Authority: University Academic Council
+ * Note: These rules operate at L3 level and may be overridden by L1 (National) or L2 (Accreditation) rules
+ */
+
+rule "University_Medical_Excuse_Attendance"
+    salience 300
+    
+    metadata {
+        level: "L3_University",
+        authority: "University Academic Council",
+        source: "University Statute 2020, Chapter 5, Section 5.3",
+        sourceUrl: "https://university.edu/statutes/2020/chapter5.pdf",
+        effectiveDate: "2020-01-01",
+        category: "Attendance",
+        ruleType: "CONDITIONAL",
+        description: "Allows attendance relaxation to 70% with valid medical certificate (subject to national law compliance)"
+    }
+    
+    when
+        $g: Grievance(
+            type == "ATTENDANCE_SHORTAGE",
+            attendancePercentage >= 70,
+            attendancePercentage < 75,
+            hasMedicalCertificate == true,
+            medicalCertificateValid == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("University policy allows attendance relaxation to 70% with valid medical certificate");
+        decision.setApplicableRule("University_Medical_Excuse_Attendance");
+        decision.setRegulatorySource("University Statute 2020, Chapter 5, Section 5.3");
+        decision.setHierarchyLevel("L3_University");
+        decision.setSalience(300);
+        
+        ruleTrace.addFiredRule(
+            "University_Medical_Excuse_Attendance",
+            "L3_University",
+            300,
+            "Attendance " + $g.getAttendancePercentage() + "% >= 70%, valid medical certificate",
+            "ACCEPT",
+            "University Statute 2020, Chapter 5, Section 5.3"
+        );
+        
+        insert(decision);
+end
+
+rule "University_Fee_Structure_Installment_Policy"
+    salience 350
+    
+    metadata {
+        level: "L3_University",
+        authority: "University Finance Committee",
+        source: "University Fee Policy 2022, Section 3.2",
+        sourceUrl: "https://university.edu/policies/fee-policy-2022.pdf",
+        effectiveDate: "2022-07-01",
+        category: "Fee",
+        ruleType: "CONDITIONAL",
+        description: "Permits fee payment in 3 installments for students with family income below ₹500,000"
+    }
+    
+    when
+        $g: Grievance(
+            type == "FEE_INSTALLMENT_REQUEST",
+            familyIncome < 500000,
+            hasIncomeCertificate == true,
+            previousInstallmentDefaulted == false
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("Eligible for 3-installment fee payment: family income ₹" + $g.getFamilyIncome() + 
+                          " < ₹500,000 threshold, no previous defaults");
+        decision.setApplicableRule("University_Fee_Structure_Installment_Policy");
+        decision.setRegulatorySource("University Fee Policy 2022, Section 3.2");
+        decision.setHierarchyLevel("L3_University");
+        decision.setSalience(350);
+        
+        ruleTrace.addFiredRule(
+            "University_Fee_Structure_Installment_Policy",
+            "L3_University",
+            350,
+            "Family income ₹" + $g.getFamilyIncome() + " < ₹500,000, income certificate provided, no defaults",
+            "ACCEPT",
+            "University Fee Policy 2022, Section 3.2"
+        );
+        
+        insert(decision);
+end
+
+rule "University_Exam_Policy_Reeval_Fee"
+    salience 320
+    
+    metadata {
+        level: "L3_University",
+        authority: "University Examination Board",
+        source: "University Examination Policy 2023, Section 7.1",
+        sourceUrl: "https://university.edu/policies/exam-policy-2023.pdf",
+        effectiveDate: "2023-01-01",
+        category: "Examination",
+        ruleType: "MANDATORY",
+        description: "Requires payment of ₹500 re-evaluation fee per course (updated from 2019 policy which had no fee)"
+    }
+    
+    when
+        $g: Grievance(
+            type == "EXAMINATION_REEVAL",
+            reevaluationFeePaid == false
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("PARTIAL_ACCEPT");
+        decision.setReason("Re-evaluation request accepted pending payment of ₹500 fee per University Examination Policy 2023");
+        decision.setApplicableRule("University_Exam_Policy_Reeval_Fee");
+        decision.setRegulatorySource("University Examination Policy 2023, Section 7.1");
+        decision.setHierarchyLevel("L3_University");
+        decision.setSalience(320);
+        decision.setActionRequired("Pay ₹500 re-evaluation fee within 7 days");
+        
+        ruleTrace.addFiredRule(
+            "University_Exam_Policy_Reeval_Fee",
+            "L3_University",
+            320,
+            "Re-evaluation fee not paid (₹500 required per 2023 policy)",
+            "PARTIAL_ACCEPT",
+            "University Examination Policy 2023, Section 7.1"
+        );
+        
+        insert(decision);
+end
+
+rule "University_Grade_Appeal_Process"
+    salience 310
+    
+    metadata {
+        level: "L3_University",
+        authority: "University Academic Council",
+        source: "University Academic Regulations 2021, Section 8.4",
+        sourceUrl: "https://university.edu/regulations/academic-2021.pdf",
+        effectiveDate: "2021-08-01",
+        category: "Examination",
+        ruleType: "CONDITIONAL",
+        description: "Permits grade appeal if marks are within 5% of next grade boundary"
+    }
+    
+    when
+        $g: Grievance(
+            type == "GRADE_APPEAL",
+            marksObtained >= ($g.getNextGradeBoundary() - 5),
+            marksObtained < $g.getNextGradeBoundary(),
+            appealWithin30Days == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("Grade appeal accepted: marks " + $g.getMarksObtained() + " within 5% of next grade boundary " + 
+                          $g.getNextGradeBoundary() + ", appeal filed within 30 days");
+        decision.setApplicableRule("University_Grade_Appeal_Process");
+        decision.setRegulatorySource("University Academic Regulations 2021, Section 8.4");
+        decision.setHierarchyLevel("L3_University");
+        decision.setSalience(310);
+        
+        ruleTrace.addFiredRule(
+            "University_Grade_Appeal_Process",
+            "L3_University",
+            310,
+            "Marks " + $g.getMarksObtained() + " within 5% of boundary " + $g.getNextGradeBoundary() + ", timely appeal",
+            "ACCEPT",
+            "University Academic Regulations 2021, Section 8.4"
+        );
+        
+        insert(decision);
+end
+
+rule "University_Transcript_Delay_Compensation"
+    salience 280
+    
+    metadata {
+        level: "L3_University",
+        authority: "University Registrar Office",
+        source: "University Administrative Policy 2022, Section 12.5",
+        sourceUrl: "https://university.edu/policies/admin-policy-2022.pdf",
+        effectiveDate: "2022-01-01",
+        category: "Administrative",
+        ruleType: "CONDITIONAL",
+        description: "Provides expedited processing if transcript delay exceeds 30 days from standard timeline"
+    }
+    
+    when
+        $g: Grievance(
+            type == "TRANSCRIPT_DELAY",
+            daysDelayed > 30,
+            transcriptRequestComplete == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("Transcript delay of " + $g.getDaysDelayed() + " days exceeds 30-day standard; " +
+                          "expedited processing approved with 5-day delivery guarantee");
+        decision.setApplicableRule("University_Transcript_Delay_Compensation");
+        decision.setRegulatorySource("University Administrative Policy 2022, Section 12.5");
+        decision.setHierarchyLevel("L3_University");
+        decision.setSalience(280);
+        decision.setActionRequired("Transcript will be issued within 5 business days");
+        
+        ruleTrace.addFiredRule(
+            "University_Transcript_Delay_Compensation",
+            "L3_University",
+            280,
+            "Delay " + $g.getDaysDelayed() + " days > 30-day threshold, request complete",
+            "ACCEPT",
+            "University Administrative Policy 2022, Section 12.5"
+        );
+        
+        insert(decision);
+end

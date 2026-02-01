@@ -1,0 +1,12 @@
+{
+    "student_id": "STU2024001",
+    "grievance_type": "ATTENDANCE_SHORTAGE",
+    "narrative": "I was absent for 10 days due to medical reasons. I have a valid medical certificate from a recognized hospital.",
+    "parameters": {
+        "attendance_percentage": 72.5,
+        "has_medical_certificate": true,
+        "medical_certificate_valid": true,
+        "medical_certificate_from_recognized_authority": true,
+        "days_absent": 10
+    }
+}

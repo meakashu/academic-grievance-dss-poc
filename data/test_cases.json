@@ -1,0 +1,404 @@
+{
+  "test_suite": "Academic Grievance DSS - Comprehensive Test Cases",
+  "version": "1.0",
+  "total_cases": 60,
+  "categories": {
+    "attendance": 15,
+    "examination": 12,
+    "fee": 10,
+    "administrative": 8,
+    "conflict_resolution": 15
+  },
+  
+  "test_cases": [
+    {
+      "case_id": "TC-001",
+      "category": "CONFLICT_RESOLUTION",
+      "subcategory": "Authority Conflict (L1 vs L3)",
+      "description": "Attendance shortage with medical certificate - L1 national law vs L3 university policy",
+      "grievance": {
+        "type": "ATTENDANCE_SHORTAGE",
+        "student_id": "STU2024001",
+        "narrative": "I have 72% attendance with a valid medical certificate for 15 days of absence due to hospitalization for appendicitis. The university policy allows medical excuses.",
+        "parameters": {
+          "attendance_percentage": 72,
+          "has_medical_certificate": true,
+          "medical_certificate_valid": true,
+          "medical_certificate_from_recognized_authority": true,
+          "days_absent": 15,
+          "reason_for_absence": "Hospitalization - appendicitis"
+        }
+      },
+      "expected_outcome": {
+        "decision": "REJECT",
+        "winning_rule": "UGC_Attendance_75Percent_Minimum",
+        "hierarchy_level": "L1_National",
+        "conflicts_detected": 1,
+        "conflict_type": "AUTHORITY_CONFLICT",
+        "conflicting_rules": [
+          "UGC_Attendance_75Percent_Minimum (L1)",
+          "University_Medical_Excuse_Attendance (L3)"
+        ],
+        "resolution_reason": "L1 National law supersedes L3 University policy",
+        "explanation_should_cite": "UGC Regulations 2018, Section 4.2"
+      },
+      "rationale": "Tests core novelty: hierarchical conflict resolution with L1 overriding L3"
+    },
+    
+    {
+      "case_id": "TC-002",
+      "category": "ATTENDANCE",
+      "subcategory": "Medical Exception Accepted",
+      "description": "Attendance 68% with valid medical certificate - qualifies for L1 medical exception",
+      "grievance": {
+        "type": "ATTENDANCE_SHORTAGE",
+        "student_id": "STU2024002",
+        "narrative": "I have 68% attendance due to COVID-19 infection. I have a medical certificate from the district hospital.",
+        "parameters": {
+          "attendance_percentage": 68,
+          "has_medical_certificate": true,
+          "medical_certificate_valid": true,
+          "medical_certificate_from_recognized_authority": true,
+          "days_absent": 12,
+          "reason_for_absence": "COVID-19 infection"
+        }
+      },
+      "expected_outcome": {
+        "decision": "ACCEPT",
+        "winning_rule": "UGC_Medical_Excuse_Exception",
+        "hierarchy_level": "L1_National",
+        "conflicts_detected": 0,
+        "explanation_should_cite": "UGC Regulations 2018, Section 4.2.1"
+      },
+      "rationale": "Tests exception rule handling at L1 level"
+    },
+    
+    {
+      "case_id": "TC-003",
+      "category": "ATTENDANCE",
+      "subcategory": "Below Medical Exception Threshold",
+      "description": "Attendance 62% with medical certificate - below even exception threshold",
+      "grievance": {
+        "type": "ATTENDANCE_SHORTAGE",
+        "student_id": "STU2024003",
+        "narrative": "I have 62% attendance due to prolonged illness. I have medical certificates covering all absences.",
+        "parameters": {
+          "attendance_percentage": 62,
+          "has_medical_certificate": true,
+          "medical_certificate_valid": true,
+          "medical_certificate_from_recognized_authority": true,
+          "days_absent": 25
+        }
+      },
+      "expected_outcome": {
+        "decision": "REJECT",
+        "winning_rule": "UGC_Attendance_75Percent_Minimum",
+        "hierarchy_level": "L1_National",
+        "explanation_should_cite": "UGC Regulations 2018, Section 4.2",
+        "counterfactual": "If attendance were 65% or higher, medical exception would apply"
+      },
+      "rationale": "Tests threshold boundaries for exception rules"
+    },
+    
+    {
+      "case_id": "TC-010",
+      "category": "EXAMINATION",
+      "subcategory": "Re-evaluation Within Timeline",
+      "description": "Re-evaluation request 10 days after result declaration",
+      "grievance": {
+        "type": "EXAMINATION_REEVAL",
+        "student_id": "STU2024010",
+        "narrative": "I request re-evaluation of my Data Structures final exam. Results were declared 10 days ago and I scored 38/100.",
+        "parameters": {
+          "exam_type": "final",
+          "course_code": "CS301",
+          "marks_obtained": 38,
+          "days_since_result_declaration": 10,
+          "has_already_requested_reeval": false,
+          "revaluation_fee_paid": false
+        }
+      },
+      "expected_outcome": {
+        "decision": "PARTIAL_ACCEPT",
+        "winning_rules": [
+          "UGC_Examination_Revaluation_Right (L1)",
+          "University_Exam_Policy_Reeval_Fee (L3)"
+        ],
+        "hierarchy_level": "L1_National (primary), L3_University (procedural)",
+        "explanation_should_cite": [
+          "UGC Regulations 2018, Section 6.3",
+          "University Examination Policy 2023, Section 7.1"
+        ],
+        "action_required": "Pay ₹500 re-evaluation fee within 7 days"
+      },
+      "rationale": "Tests multi-rule application where L1 grants right and L3 adds procedural requirement"
+    },
+    
+    {
+      "case_id": "TC-015",
+      "category": "FEE",
+      "subcategory": "RTE Fee Waiver - SC Category",
+      "description": "Fee waiver request for SC student with low family income",
+      "grievance": {
+        "type": "FEE_WAIVER",
+        "student_id": "STU2024015",
+        "narrative": "I belong to SC category and my family annual income is ₹150,000. I request full fee waiver.",
+        "parameters": {
+          "student_category": "SC",
+          "family_income": 150000,
+          "has_income_certificate": true,
+          "has_category_certificate": true,
+          "fee_amount": 75000
+        }
+      },
+      "expected_outcome": {
+        "decision": "ACCEPT",
+        "winning_rule": "Right_To_Education_Fee_Waiver_SC_ST",
+        "hierarchy_level": "L1_National",
+        "explanation_should_cite": "Right to Education Act 2009, Section 12(1)(c)"
+      },
+      "rationale": "Tests L1 national law for fee waiver eligibility"
+    },
+    
+    {
+      "case_id": "TC-023",
+      "category": "FAIRNESS_MONITORING",
+      "subcategory": "Consistency Check - Similar Cases",
+      "description": "Attendance 73% with medical certificate - should match historical pattern",
+      "grievance": {
+        "type": "ATTENDANCE_SHORTAGE",
+        "student_id": "STU2024023",
+        "narrative": "I have 73% attendance with valid medical certificate for 10 days absence.",
+        "parameters": {
+          "attendance_percentage": 73,
+          "has_medical_certificate": true,
+          "medical_certificate_valid": true,
+          "medical_certificate_from_recognized_authority": true,
+          "days_absent": 10
+        }
+      },
+      "expected_outcome": {
+        "decision": "REJECT",
+        "winning_rule": "UGC_Attendance_75Percent_Minimum",
+        "fairness_check": {
+          "similar_cases_expected": 4,
+          "consistency_score_expected": ">0.85",
+          "anomaly_detected": false
+        }
+      },
+      "historical_similar_cases": [
+        {"case_id": "HIST-001", "attendance": 72, "medical_cert": true, "outcome": "REJECT"},
+        {"case_id": "HIST-002", "attendance": 73, "medical_cert": true, "outcome": "REJECT"},
+        {"case_id": "HIST-003", "attendance": 74, "medical_cert": true, "outcome": "REJECT"},
+        {"case_id": "HIST-004", "attendance": 72.5, "medical_cert": true, "outcome": "REJECT"}
+      ],
+      "rationale": "Tests fairness consistency monitoring with expected consistent outcomes"
+    },
+    
+    {
+      "case_id": "TC-038",
+      "category": "EXAMINATION",
+      "subcategory": "Grade Appeal - Within Boundary",
+      "description": "Grade appeal for marks within 5% of next grade boundary",
+      "grievance": {
+        "type": "GRADE_APPEAL",
+        "student_id": "STU2024038",
+        "narrative": "I scored 67 marks in Database Systems. The A grade boundary is 70. I request grade review.",
+        "parameters": {
+          "course_code": "CS302",
+          "marks_obtained": 67,
+          "current_grade": "B+",
+          "next_grade": "A",
+          "next_grade_boundary": 70,
+          "appeal_within_30_days": true
+        }
+      },
+      "expected_outcome": {
+        "decision": "ACCEPT",
+        "winning_rule": "University_Grade_Appeal_Process",
+        "hierarchy_level": "L3_University",
+        "explanation_should_cite": "University Academic Regulations 2021, Section 8.4"
+      },
+      "rationale": "Tests L3 university-specific grade appeal policy"
+    },
+    
+    {
+      "case_id": "TC-047",
+      "category": "FEE",
+      "subcategory": "Installment Request - Eligible",
+      "description": "Fee installment request for student with family income below threshold",
+      "grievance": {
+        "type": "FEE_INSTALLMENT_REQUEST",
+        "student_id": "STU2024047",
+        "narrative": "My family income is ₹350,000 per year. I request permission to pay fees in installments.",
+        "parameters": {
+          "family_income": 350000,
+          "has_income_certificate": true,
+          "previous_installment_defaulted": false,
+          "total_fee_amount": 90000
+        }
+      },
+      "expected_outcome": {
+        "decision": "ACCEPT",
+        "winning_rule": "University_Fee_Structure_Installment_Policy",
+        "hierarchy_level": "L3_University",
+        "explanation_should_cite": "University Fee Policy 2022, Section 3.2"
+      },
+      "rationale": "Tests L3 university fee policy for installment eligibility"
+    },
+    
+    {
+      "case_id": "TC-052",
+      "category": "CONFLICT_RESOLUTION",
+      "subcategory": "Temporal Conflict (L3 2019 vs L3 2023)",
+      "description": "Student cites outdated examination policy from 2019",
+      "grievance": {
+        "type": "EXAMINATION_REEVAL",
+        "student_id": "STU2024052",
+        "narrative": "According to the 2019 examination policy, re-evaluation should be free. I request waiver of the ₹500 fee.",
+        "parameters": {
+          "exam_type": "final",
+          "days_since_result_declaration": 5,
+          "has_already_requested_reeval": false,
+          "revaluation_fee_paid": false,
+          "citing_policy_year": 2019
+        }
+      },
+      "expected_outcome": {
+        "decision": "PARTIAL_ACCEPT",
+        "winning_rule": "University_Exam_Policy_Reeval_Fee",
+        "hierarchy_level": "L3_University",
+        "conflicts_detected": 1,
+        "conflict_type": "TEMPORAL_CONFLICT",
+        "conflicting_rules": [
+          "University_Exam_Policy_2019 (no fee)",
+          "University_Exam_Policy_2023 (₹500 fee)"
+        ],
+        "resolution_reason": "2023 policy supersedes 2019 policy based on effective date",
+        "explanation_should_cite": "University Examination Policy 2023, Section 7.1",
+        "action_required": "Pay ₹500 re-evaluation fee per current 2023 policy"
+      },
+      "rationale": "Tests temporal conflict resolution where newer regulation overrides older one"
+    },
+    
+    {
+      "case_id": "TC-055",
+      "category": "ADMINISTRATIVE",
+      "subcategory": "Transcript Delay - Compensation",
+      "description": "Transcript delay exceeding 30-day standard timeline",
+      "grievance": {
+        "type": "TRANSCRIPT_DELAY",
+        "student_id": "STU2024055",
+        "narrative": "I requested my transcript 45 days ago and have not received it. I need it urgently for job application.",
+        "parameters": {
+          "days_delayed": 45,
+          "transcript_request_complete": true,
+          "transcript_type": "official",
+          "urgency_reason": "job_application"
+        }
+      },
+      "expected_outcome": {
+        "decision": "ACCEPT",
+        "winning_rule": "University_Transcript_Delay_Compensation",
+        "hierarchy_level": "L3_University",
+        "explanation_should_cite": "University Administrative Policy 2022, Section 12.5",
+        "action_required": "Transcript will be issued within 5 business days"
+      },
+      "rationale": "Tests L3 administrative policy for service delay compensation"
+    },
+    
+    {
+      "case_id": "TC-060",
+      "category": "AMBIGUITY_DETECTION",
+      "subcategory": "Vague Grievance Narrative",
+      "description": "Grievance with missing critical parameters requiring clarification",
+      "grievance": {
+        "type": "FEE_WAIVER",
+        "student_id": "STU2024060",
+        "narrative": "I am facing financial difficulties and request fee waiver for this semester.",
+        "parameters": {
+          "student_category": null,
+          "family_income": null,
+          "has_income_certificate": null,
+          "has_category_certificate": null
+        }
+      },
+      "expected_outcome": {
+        "ambiguity_detected": true,
+        "clarification_needed": [
+          "What is your annual family income?",
+          "Do you belong to SC/ST/OBC/General category?",
+          "Have you submitted income certificate?",
+          "Have you submitted category certificate (if SC/ST/OBC)?"
+        ],
+        "decision": "PENDING_CLARIFICATION",
+        "llm_should_extract": {
+          "grievance_type": "FEE_WAIVER",
+          "reason": "financial_difficulties"
+        }
+      },
+      "rationale": "Tests LLM-based ambiguity detection and parameter extraction"
+    }
+  ],
+  
+  "evaluation_metrics": {
+    "decision_accuracy": {
+      "description": "Percentage of test cases with correct outcome (ACCEPT/REJECT/PARTIAL_ACCEPT)",
+      "target": ">=90%",
+      "calculation": "correct_outcomes / total_cases"
+    },
+    "conflict_resolution_accuracy": {
+      "description": "Percentage of conflict cases resolved correctly",
+      "target": ">=95%",
+      "calculation": "correct_conflict_resolutions / total_conflict_cases"
+    },
+    "fairness_consistency_score": {
+      "description": "Average consistency score across cases with similar historical precedents",
+      "target": ">=0.85",
+      "calculation": "avg(consistent_outcomes / similar_cases) for all cases with similar_cases > 0"
+    },
+    "regulation_citation_accuracy": {
+      "description": "Percentage of explanations citing correct regulatory sources",
+      "target": ">=95%",
+      "calculation": "correct_citations / total_cases"
+    },
+    "trace_completeness": {
+      "description": "Percentage of fired rules captured in decision traces",
+      "target": "100%",
+      "calculation": "captured_rules / total_fired_rules"
+    },
+    "processing_time": {
+      "description": "Average time from grievance submission to decision generation",
+      "target": "<2 seconds",
+      "calculation": "avg(decision_timestamp - submission_timestamp)"
+    }
+  },
+  
+  "test_execution_instructions": {
+    "setup": [
+      "Load all rule files from rules/ directory into Drools engine",
+      "Initialize PostgreSQL database with schema from data/init.sql",
+      "Load historical cases for fairness comparison",
+      "Configure LLM API with OpenAI GPT-4 credentials"
+    ],
+    "execution": [
+      "For each test case:",
+      "  1. Submit grievance via API endpoint POST /api/grievances",
+      "  2. Capture rule trace and decision output",
+      "  3. Compare actual outcome with expected outcome",
+      "  4. Verify conflict detection and resolution (if applicable)",
+      "  5. Check fairness consistency score (if similar cases exist)",
+      "  6. Validate regulation citations in explanation",
+      "  7. Measure processing time"
+    ],
+    "reporting": [
+      "Generate test report with:",
+      "  - Overall decision accuracy percentage",
+      "  - Conflict resolution accuracy percentage",
+      "  - Average fairness consistency score",
+      "  - Regulation citation accuracy percentage",
+      "  - Average processing time",
+      "  - List of failed cases with error analysis"
+    ]
+  }
+}

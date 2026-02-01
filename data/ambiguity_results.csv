@@ -1,0 +1,81 @@
+clause_id,regulation_text,human_label,llm_prediction,ambiguity_terms,ambiguity_type,correct
+REG001,Students must maintain a minimum of 75% attendance to be eligible for semester examinations.,non_ambiguous,non_ambiguous,none,none,true
+REG002,Students with exceptional circumstances may be granted attendance relaxation at the discretion of the academic committee.,ambiguous,ambiguous,"may, exceptional circumstances, discretion, granted","context-dependent, permissive",true
+REG003,Re-evaluation requests must be submitted within 15 days of result declaration.,non_ambiguous,non_ambiguous,none,none,true
+REG004,The examination committee may permit re-evaluation if reasonable grounds are demonstrated.,ambiguous,ambiguous,"may, reasonable","subjective, permissive",true
+REG005,Students belonging to SC/ST categories with family income below Rs 200000 are eligible for fee waiver.,non_ambiguous,non_ambiguous,none,none,true
+REG006,Fee installment may be allowed for students facing genuine financial hardship.,ambiguous,ambiguous,"may, genuine, allowed","subjective, permissive",true
+REG007,Medical certificates must be issued by a government hospital or recognized medical authority.,non_ambiguous,non_ambiguous,none,none,true
+REG008,Medical excuses will be considered valid if the illness was sufficiently serious to prevent attendance.,ambiguous,ambiguous,"valid, considered","subjective, permissive",true
+REG009,Grade appeals must be filed within 30 days of grade publication.,non_ambiguous,non_ambiguous,none,none,true
+REG010,Grade changes may be approved if there is substantial evidence of evaluation error.,ambiguous,ambiguous,"may, substantial, approved","subjective, permissive",true
+REG011,Laboratory attendance must be at least 80% for technical programs.,non_ambiguous,non_ambiguous,none,none,true
+REG012,Students demonstrating adequate progress in research may be granted academic flexibility.,ambiguous,ambiguous,"may, adequate, granted","subjective, permissive",true
+REG013,Transcripts will be issued within 30 days of request submission.,non_ambiguous,non_ambiguous,none,none,true
+REG014,Transcript delays beyond reasonable timeframes may warrant compensation.,ambiguous,ambiguous,"may, reasonable","subjective, permissive",true
+REG015,Students must score at least 40% to pass an examination.,non_ambiguous,non_ambiguous,none,none,true
+REG016,Borderline cases may be reviewed by the examination board for possible grade adjustment.,ambiguous,ambiguous,"may, Borderline, reviewed, Borderline cases","subjective, context-dependent, permissive",true
+REG017,Industry internships of 30 days or more qualify for attendance relaxation under NBA guidelines.,non_ambiguous,non_ambiguous,none,none,true
+REG018,Internships of appropriate duration and quality may be considered for academic credit.,ambiguous,ambiguous,"may, appropriate, considered, quality","subjective, permissive",true
+REG019,Students must submit grievances within 7 days of the disputed event.,non_ambiguous,non_ambiguous,none,none,true
+REG020,Grievances submitted after the deadline may be entertained in special circumstances.,ambiguous,ambiguous,"may, special circumstances, entertained","context-dependent, permissive",true
+REG021,Plagiarism detection software will flag submissions with more than 20% similarity.,non_ambiguous,non_ambiguous,none,none,true
+REG022,Similarity reports will be evaluated considering the nature and context of the work.,ambiguous,ambiguous,nature and context,context-dependent,true
+REG023,Students must complete all course requirements to be eligible for degree conferral.,non_ambiguous,non_ambiguous,none,none,true
+REG024,Degree conferral may be delayed if the student's conduct record is unsatisfactory.,ambiguous,ambiguous,"may, unsatisfactory","subjective, permissive",true
+REG025,Hostel fees must be paid by the 10th of each month.,non_ambiguous,non_ambiguous,none,none,true
+REG026,Late fee payment may be permitted if the delay was due to unavoidable circumstances.,ambiguous,ambiguous,"may, unavoidable circumstances, permitted","context-dependent, permissive",true
+REG027,Students must maintain a CGPA of 6.0 or above to continue in the program.,non_ambiguous,non_ambiguous,none,none,true
+REG028,Students with marginally low CGPA may be allowed to continue under academic probation.,ambiguous,ambiguous,"may, allowed, marginally","subjective, permissive",true
+REG029,Research publications in Scopus-indexed journals qualify for academic recognition.,non_ambiguous,non_ambiguous,none,none,true
+REG030,Publications in reputable journals may be considered for academic flexibility.,ambiguous,ambiguous,"may, reputable, considered","subjective, permissive",true
+REG031,Students absent for more than 3 consecutive days must submit a leave application.,non_ambiguous,non_ambiguous,none,none,true
+REG032,Prolonged absences require appropriate justification and supporting documentation.,ambiguous,ambiguous,appropriate,subjective,true
+REG033,Examination answer scripts will be preserved for 6 months after result declaration.,non_ambiguous,non_ambiguous,none,none,true
+REG034,Answer scripts may be retained longer if there are pending disputes or appeals.,ambiguous,ambiguous,"may, pending disputes","context-dependent, permissive",true
+REG035,Students must register for courses within the first week of the semester.,non_ambiguous,non_ambiguous,none,none,true
+REG036,Late course registration may be permitted for valid reasons with departmental approval.,ambiguous,ambiguous,"may, valid, valid reasons, permitted","subjective, context-dependent, permissive",true
+REG037,Library books must be returned within 14 days of issue.,non_ambiguous,non_ambiguous,none,none,true
+REG038,Overdue fines may be waived in exceptional cases at the librarian's discretion.,ambiguous,ambiguous,"may, waived, discretion",permissive,true
+REG039,Students must complete at least 120 credits to graduate.,non_ambiguous,non_ambiguous,none,none,true
+REG040,Credit transfer from other institutions may be approved if the courses are substantially similar.,ambiguous,ambiguous,"may, approved",permissive,true
+REG041,Semester examinations will be conducted in the months of May and December.,non_ambiguous,ambiguous,May,permissive,false
+REG042,Examination dates may be adjusted if there are unforeseen circumstances.,ambiguous,ambiguous,"may, unforeseen circumstances","context-dependent, permissive",true
+REG043,Students must score at least 50% in internal assessments to be eligible for final exams.,non_ambiguous,non_ambiguous,none,none,true
+REG044,Internal assessment marks may be moderated if the overall class performance is poor.,ambiguous,ambiguous,"may, poor","subjective, permissive",true
+REG045,Hostel residents must vacate rooms within 3 days of semester end.,non_ambiguous,non_ambiguous,none,none,true
+REG046,Room vacation deadlines may be extended for students with compelling reasons.,ambiguous,ambiguous,"may, compelling reasons","context-dependent, permissive",true
+REG047,Students must attend at least 75% of laboratory sessions separately from theory classes.,non_ambiguous,non_ambiguous,none,none,true
+REG048,Lab attendance requirements may be relaxed for students engaged in significant research activities.,ambiguous,ambiguous,"may, significant","subjective, permissive",true
+REG049,Scholarship recipients must maintain a minimum CGPA of 7.5.,non_ambiguous,non_ambiguous,none,none,true
+REG050,Scholarship continuation may be reviewed if the student's academic performance declines.,ambiguous,ambiguous,"may, reviewed",permissive,true
+REG051,Students must complete their degree within the maximum duration of 8 years.,non_ambiguous,non_ambiguous,none,none,true
+REG052,Degree completion deadlines may be extended in extraordinary circumstances with senate approval.,ambiguous,ambiguous,"may, extraordinary circumstances","context-dependent, permissive",true
+REG053,Anti-ragging committee must investigate all reported incidents within 7 days.,non_ambiguous,non_ambiguous,none,none,true
+REG054,Disciplinary action will be proportionate to the severity of the ragging offense.,ambiguous,ambiguous,"severity, proportionate",subjective,true
+REG055,Students must submit project reports in PDF format with a maximum file size of 10 MB.,non_ambiguous,non_ambiguous,none,none,true
+REG056,Project reports should be of adequate length and depth to demonstrate mastery of the subject.,ambiguous,ambiguous,"adequate, depth, mastery",subjective,true
+REG057,Examination halls will accommodate a maximum of 30 students per room.,non_ambiguous,non_ambiguous,none,none,true
+REG058,Seating arrangements may be modified based on the nature of the examination.,ambiguous,ambiguous,"may, based on","context-dependent, permissive",true
+REG059,Students must wear their ID cards at all times within the campus.,non_ambiguous,non_ambiguous,none,none,true
+REG060,Dress code violations may result in disciplinary action depending on the context.,ambiguous,ambiguous,"may, depending on","context-dependent, permissive",true
+REG061,Course instructors must upload grades within 10 days of examination completion.,non_ambiguous,non_ambiguous,none,none,true
+REG062,Grade submission deadlines may be extended if there are technical difficulties.,ambiguous,ambiguous,"may, technical difficulties","context-dependent, permissive",true
+REG063,Students must complete a minimum of 6 months industrial training for the degree.,non_ambiguous,non_ambiguous,none,none,true
+REG064,Industrial training of appropriate quality and relevance may substitute for elective courses.,ambiguous,ambiguous,"may, appropriate, quality","subjective, permissive",true
+REG065,Examination re-totaling requests must be accompanied by a fee of Rs 500.,non_ambiguous,non_ambiguous,none,none,true
+REG066,Re-totaling fees may be refunded if an error is discovered in the original totaling.,ambiguous,ambiguous,may,permissive,true
+REG067,Students must complete ethics and values course in the first year.,non_ambiguous,non_ambiguous,none,none,true
+REG068,Ethics course attendance may be waived for students with prior relevant training.,ambiguous,ambiguous,"may, waived",permissive,true
+REG069,Thesis defense presentations must be at least 30 minutes in duration.,non_ambiguous,non_ambiguous,none,none,true
+REG070,Thesis defense duration may be extended if the committee requires additional clarification.,ambiguous,ambiguous,may,permissive,true
+REG071,Students must submit course feedback forms before accessing their semester results.,non_ambiguous,non_ambiguous,none,none,true
+REG072,Feedback submission requirements may be relaxed in cases of technical system failures.,ambiguous,ambiguous,"may, system failures","context-dependent, permissive",true
+REG073,Examination malpractice results in automatic failure of the course.,non_ambiguous,non_ambiguous,none,none,true
+REG074,Malpractice penalties may be reduced if the student demonstrates genuine remorse.,ambiguous,ambiguous,"may, genuine, remorse","subjective, permissive",true
+REG075,Students must register for a minimum of 18 credits per semester.,non_ambiguous,non_ambiguous,none,none,true
+REG076,Credit load may be reduced for students facing health or personal challenges.,ambiguous,ambiguous,"may, health or personal challenges","context-dependent, permissive",true
+REG077,Convocation attendance is mandatory for degree recipients.,non_ambiguous,non_ambiguous,none,none,true
+REG078,Convocation attendance may be excused for students with valid reasons.,ambiguous,ambiguous,"may, valid, valid reasons","subjective, context-dependent, permissive",true
+REG079,Students must clear all financial dues before receiving their degree certificate.,non_ambiguous,non_ambiguous,none,none,true
+REG080,Degree issuance may be expedited in urgent cases with proper justification.,ambiguous,ambiguous,"may, proper, urgent cases","subjective, context-dependent, permissive",true

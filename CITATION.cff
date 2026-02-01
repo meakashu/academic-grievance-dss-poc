@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Academic Grievance Decision Support System"
+abstract: "A rule-based, hierarchy-aware, explainable decision support system for academic grievance resolution in higher education institutions. This proof-of-concept demonstrates the integration of Drools rule engine with GPT-4 for governance-focused AI, implementing a 3-tier hierarchical governance model (National, Accreditation, University) with complete auditability and fairness monitoring."
+authors:
+  - family-names: "Singh"
+    given-names: "Akash Kumar"
+    email: "meakash22dotin@gmail.com"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/akashsingh/academic-grievance-dss-poc"
+url: "https://github.com/akashsingh/academic-grievance-dss-poc"
+license: "Educational and Research Use Only"
+version: "1.0.0"
+date-released: "2026-02-01"
+keywords:
+  - "decision support system"
+  - "rule-based reasoning"
+  - "governance"
+  - "higher education"
+  - "drools"
+  - "llm"
+  - "explainable ai"
+  - "fairness monitoring"
+  - "academic grievance"
+  - "conflict resolution"
+preferred-citation:
+  type: article
+  title: "A Rule-Based Decision Support System for Automated Academic Grievance Resolution"
+  authors:
+    - family-names: "Singh"
+      given-names: "Akash Kumar"
+      email: "meakash22dotin@gmail.com"
+  year: 2026
+  journal: "[Journal Name - To be updated]"
+  abstract: "This paper presents a novel rule-based decision support system for automated academic grievance resolution in Indian higher education institutions. The system implements a 3-tier hierarchical governance model (L1: National, L2: Accreditation, L3: University) with LLM-assisted ambiguity detection, complete auditability, and fairness monitoring."

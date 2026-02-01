@@ -1,0 +1,237 @@
+package com.grievance.rules.L2_accreditation;
+
+import com.grievance.model.Grievance;
+import com.grievance.model.Decision;
+import com.grievance.model.RuleTrace;
+
+global RuleTrace ruleTrace;
+
+/**
+ * L2 Accreditation Standards - NAAC/NBA Regulations
+ * Authority: National Assessment and Accreditation Council (NAAC) / National Board of Accreditation (NBA)
+ * Hierarchy Level: L2 (Accreditation Body)
+ * Precedence: Supersedes L3 (University), Superseded by L1 (National Law)
+ */
+
+rule "NAAC_Quality_Assurance_Attendance_Monitoring"
+    salience 1200
+    
+    metadata {
+        level: "L2_Accreditation",
+        authority: "National Assessment and Accreditation Council (NAAC)",
+        source: "NAAC Quality Indicator 2.5.2 - Student Attendance Monitoring",
+        sourceUrl: "http://www.naac.gov.in/images/docs/Manuals/RAF2020.pdf",
+        effectiveDate: "2020-07-01",
+        category: "Attendance",
+        ruleType: "GUIDELINE",
+        description: "NAAC accreditation standards require institutions to maintain 75% attendance with documented monitoring systems"
+    }
+    
+    when
+        $g: Grievance(
+            type == "ATTENDANCE_SHORTAGE",
+            attendancePercentage >= 70,
+            attendancePercentage < 75,
+            hasAttendanceMonitoringRecord == true,
+            hasParentalNotification == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("PENDING");
+        decision.setReason("NAAC guidelines require documented attendance monitoring. Case requires review by academic committee with parental notification on record.");
+        decision.setApplicableRule("NAAC_Quality_Assurance_Attendance_Monitoring");
+        decision.setRegulatorySource("NAAC Quality Indicator 2.5.2");
+        decision.setHierarchyLevel("L2_Accreditation");
+        decision.setSalience(1200);
+        decision.setHumanReviewRequired(true);
+        
+        ruleTrace.addFiredRule(
+            "NAAC_Quality_Assurance_Attendance_Monitoring",
+            "L2_Accreditation",
+            1200,
+            "Attendance " + $g.getAttendancePercentage() + "% with monitoring record and parental notification",
+            "PENDING",
+            "NAAC Quality Indicator 2.5.2"
+        );
+        
+        insert(decision);
+end
+
+rule "NBA_Technical_Education_Lab_Attendance"
+    salience 1250
+    
+    metadata {
+        level: "L2_Accreditation",
+        authority: "National Board of Accreditation (NBA)",
+        source: "NBA Accreditation Manual - Criterion 3.2 (Laboratory Attendance)",
+        sourceUrl: "https://www.nbaind.org/Files/NBA-Accreditation-Manual-2020.pdf",
+        effectiveDate: "2020-01-01",
+        category: "Attendance",
+        ruleType: "MANDATORY",
+        description: "NBA mandates minimum 80% lab attendance for technical courses, separate from theory attendance"
+    }
+    
+    when
+        $g: Grievance(
+            type == "ATTENDANCE_SHORTAGE",
+            isTechnicalCourse == true,
+            labAttendancePercentage >= 80,
+            theoryAttendancePercentage < 75,
+            hasLabCompletionCertificate == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("NBA accreditation standards met: Lab attendance " + $g.getLabAttendancePercentage() + 
+                          "% exceeds 80% requirement for technical courses. Theory attendance shortfall may be condoned with lab completion certificate.");
+        decision.setApplicableRule("NBA_Technical_Education_Lab_Attendance");
+        decision.setRegulatorySource("NBA Accreditation Manual - Criterion 3.2");
+        decision.setHierarchyLevel("L2_Accreditation");
+        decision.setSalience(1250);
+        
+        ruleTrace.addFiredRule(
+            "NBA_Technical_Education_Lab_Attendance",
+            "L2_Accreditation",
+            1250,
+            "Technical course with lab attendance " + $g.getLabAttendancePercentage() + "% >= 80%, theory " + 
+            $g.getTheoryAttendancePercentage() + "%",
+            "ACCEPT",
+            "NBA Accreditation Manual - Criterion 3.2"
+        );
+        
+        insert(decision);
+end
+
+rule "NAAC_Student_Grievance_Redressal_Timeline"
+    salience 1100
+    
+    metadata {
+        level: "L2_Accreditation",
+        authority: "National Assessment and Accreditation Council (NAAC)",
+        source: "NAAC Quality Indicator 5.1.4 - Grievance Redressal Mechanism",
+        sourceUrl: "http://www.naac.gov.in/images/docs/Manuals/RAF2020.pdf",
+        effectiveDate: "2020-07-01",
+        category: "Administrative",
+        ruleType: "GUIDELINE",
+        description: "NAAC requires institutions to resolve student grievances within 30 days with documented process"
+    }
+    
+    when
+        $g: Grievance(
+            daysSinceSubmission > 30,
+            hasEscalationRequest == true,
+            hasDocumentedFollowUp == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("NAAC accreditation standards violated: Grievance pending for " + $g.getDaysSinceSubmission() + 
+                          " days exceeds 30-day resolution timeline. Escalation warranted.");
+        decision.setApplicableRule("NAAC_Student_Grievance_Redressal_Timeline");
+        decision.setRegulatorySource("NAAC Quality Indicator 5.1.4");
+        decision.setHierarchyLevel("L2_Accreditation");
+        decision.setSalience(1100);
+        decision.setHumanReviewRequired(true);
+        
+        ruleTrace.addFiredRule(
+            "NAAC_Student_Grievance_Redressal_Timeline",
+            "L2_Accreditation",
+            1100,
+            "Grievance pending " + $g.getDaysSinceSubmission() + " days > 30-day NAAC timeline",
+            "ACCEPT",
+            "NAAC Quality Indicator 5.1.4"
+        );
+        
+        insert(decision);
+end
+
+rule "NBA_Industry_Internship_Attendance_Exemption"
+    salience 1300
+    
+    metadata {
+        level: "L2_Accreditation",
+        authority: "National Board of Accreditation (NBA)",
+        source: "NBA Outcome Based Education - Criterion 3.3 (Industry Interaction)",
+        sourceUrl: "https://www.nbaind.org/Files/NBA-Accreditation-Manual-2020.pdf",
+        effectiveDate: "2020-01-01",
+        category: "Attendance",
+        ruleType: "EXCEPTION",
+        description: "NBA allows attendance exemption for students engaged in industry internships/projects as part of curriculum"
+    }
+    
+    when
+        $g: Grievance(
+            type == "ATTENDANCE_SHORTAGE",
+            attendancePercentage >= 65,
+            attendancePercentage < 75,
+            hasIndustryInternship == true,
+            internshipDuration >= 30,
+            hasInternshipCompletionCertificate == true,
+            hasIndustryMentorApproval == true
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("NBA accreditation exception: Industry internship of " + $g.getInternshipDuration() + 
+                          " days with completion certificate and mentor approval. Attendance relaxed to 65% for industry engagement.");
+        decision.setApplicableRule("NBA_Industry_Internship_Attendance_Exemption");
+        decision.setRegulatorySource("NBA Outcome Based Education - Criterion 3.3");
+        decision.setHierarchyLevel("L2_Accreditation");
+        decision.setSalience(1300);
+        
+        ruleTrace.addFiredRule(
+            "NBA_Industry_Internship_Attendance_Exemption",
+            "L2_Accreditation",
+            1300,
+            "Industry internship " + $g.getInternshipDuration() + " days, attendance " + 
+            $g.getAttendancePercentage() + "% >= 65%",
+            "ACCEPT",
+            "NBA Outcome Based Education - Criterion 3.3"
+        );
+        
+        insert(decision);
+end
+
+rule "NAAC_Research_Publication_Academic_Flexibility"
+    salience 1150
+    
+    metadata {
+        level: "L2_Accreditation",
+        authority: "National Assessment and Accreditation Council (NAAC)",
+        source: "NAAC Quality Indicator 3.4.3 - Research Publications",
+        sourceUrl: "http://www.naac.gov.in/images/docs/Manuals/RAF2020.pdf",
+        effectiveDate: "2020-07-01",
+        category: "Academic",
+        ruleType: "EXCEPTION",
+        description: "NAAC encourages academic flexibility for students engaged in research with publications"
+    }
+    
+    when
+        $g: Grievance(
+            type in ("ATTENDANCE_SHORTAGE", "EXAMINATION_REEVAL"),
+            hasResearchPublication == true,
+            publicationIndexed == true,
+            hasFacultyAdvisorApproval == true,
+            attendancePercentage >= 60
+        )
+    then
+        Decision decision = new Decision();
+        decision.setOutcome("ACCEPT");
+        decision.setReason("NAAC research excellence provision: Student has indexed research publication with faculty approval. " +
+                          "Academic flexibility granted for research engagement.");
+        decision.setApplicableRule("NAAC_Research_Publication_Academic_Flexibility");
+        decision.setRegulatorySource("NAAC Quality Indicator 3.4.3");
+        decision.setHierarchyLevel("L2_Accreditation");
+        decision.setSalience(1150);
+        
+        ruleTrace.addFiredRule(
+            "NAAC_Research_Publication_Academic_Flexibility",
+            "L2_Accreditation",
+            1150,
+            "Indexed research publication with faculty approval, attendance " + $g.getAttendancePercentage() + "%",
+            "ACCEPT",
+            "NAAC Quality Indicator 3.4.3"
+        );
+        
+        insert(decision);
+end
